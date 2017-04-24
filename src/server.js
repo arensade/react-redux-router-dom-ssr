@@ -6,7 +6,7 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router'
 import { App } from './components/app.component';
 import { createStore,applyMiddleware,compose } from 'redux'
-import combineRed from './reducers';
+import reducers from './reducers';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import {getUserListAction} from "./actions/users.action";
@@ -33,7 +33,7 @@ const finalCreateStore = compose(
     serverHelper
 )(createStore);
 export default function configureStore(initialState) {
-    return finalCreateStore(combineRed, initialState);
+    return finalCreateStore(reducers, initialState);
 }
 
 const html = `
