@@ -1,5 +1,3 @@
-/* eslint no-console: "off"*/
-
 import path from 'path';
 import { Server } from 'http';
 import Express from 'express';
@@ -22,8 +20,6 @@ app.set('views', path.join(__dirname, 'views'));
 
 // define the folder that will be used for static assets
 app.use(Express.static(path.join(__dirname, 'static')));
-//app.use(Express.static(path.join(__dirname, '../public/')));
-console.log(__dirname);
 function cacheControl(req, res, next) {
     // instruct browser to revalidate in 60 seconds
     res.header('Cache-Control', 'max-age=1');
@@ -42,7 +38,7 @@ export default function configureStore(initialState) {
 const html = `
 <html>
   <head>
-    <title>Kısık Ateş</title>
+    <title>React-Redux Universal</title>
      <base href="/static/" />
     <link rel="stylesheet" href="assets/styles/main.css">
   </head>
@@ -80,7 +76,8 @@ function handleRender(req, res,next) {
                     .replace('"-- STORES --"', JSON.stringify(state))
             );
         }).catch(next);
-    },1);
+        //TODO: What we have to do for async dispatch?
+    },2000);
 }
 
 app.use(handleRender);
