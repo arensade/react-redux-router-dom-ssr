@@ -5,14 +5,15 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router'
 import { App } from './components/app.component';
-const app = new Express();
-const server = new Server(app);
 import { createStore,applyMiddleware,compose } from 'redux'
 import combineRed from './reducers';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import {getUserListAction} from "./actions/users.action";
 import {serverHelper,renderAsync} from 'redux-async-render';
+
+const app = new Express();
+const server = new Server(app);
 
 // use ejs templates
 app.set('view engine', 'ejs');
