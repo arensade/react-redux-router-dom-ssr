@@ -4,8 +4,9 @@ const UserListsReducer = (state={}, action) => {
         case "getList":
             return {
                 ...state,
-                ...action
+                ...action.payload.data
             };
+            break;
         default:
             return state;
     }

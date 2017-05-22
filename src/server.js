@@ -11,10 +11,10 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import {getUserListAction} from "./actions/users.action";
 import {serverHelper,renderAsync} from 'redux-async-render';
-
+import promiseMiddleware from 'redux-promise';
 const app = new Express();
 const server = new Server(app);
-
+import asyncAwait from 'redux-async-await';
 // use ejs templates
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -57,7 +57,7 @@ const html = `
 function handleRender(req, res,next) {
     const context = {};
 
-    const middleware = [ thunk ];
+    const middleware = [ thunk,promiseMiddleware,asyncAwait ];
     const store = configureStore(applyMiddleware(...middleware));
     store.dispatch(getUserListAction());
     const renderFn = () => renderToString(
@@ -73,12 +73,13 @@ function handleRender(req, res,next) {
         renderAsync(store, renderFn).then(rendered => {
             res.status(200).send(
                 html
+
                     .replace('<!-- CONTENT -->', rendered)
                     .replace('"-- STORES --"', JSON.stringify(state))
             );
         }).catch(next);
         //TODO: What we have to do for async dispatch?
-    },2000);
+    },500);
 }
 
 app.use(handleRender);

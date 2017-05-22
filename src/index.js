@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { App } from './components/app.component';
 import { Provider } from 'react-redux'
 import ReactDOM from 'react-dom';
+import promiseMiddleware from 'redux-promise';
 
 import asyncAwait from 'redux-async-await';
 
@@ -17,7 +18,7 @@ const AppClient = () => (
 );
 
 window.onload = () => {
-    const middleware = [ ReduxThunk ];
+    const middleware = [ ReduxThunk,promiseMiddleware ];
     let store = createStore(reducers,applyMiddleware(...middleware));
     //let store = applyMiddleware(asyncAwait)(createStore)(...middleware);
 
